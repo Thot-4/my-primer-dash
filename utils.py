@@ -7,7 +7,7 @@ class APIBMEHandler:
     def __init__(self):
         self.url_base = 'https://miax-gateway-jog4ew3z3q-ew.a.run.app'
         self.competi = 'mia_6'
-        self.user_key = 'AIzaSyAcDy-u5BlPPgwQk7v6TVKvtf4eGfVlX8I'
+        self.user_key = 'AIzaSyBT9rPRqUJspsERLPn7_jw4E1gSXQPqZGk'
 
     def get_ticker_master(self, market):
         url = f'{self.url_base}/data/ticker_master'
