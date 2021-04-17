@@ -7,7 +7,7 @@ class APIBMEHandler:
     def __init__(self):
         self.url_base = 'https://miax-gateway-jog4ew3z3q-ew.a.run.app'
         self.competi = 'mia_6'
-        self.user_key = 'AIzaSyBT9rPRqUJspsERLPn7_jw4E1gSXQPqZGk'
+        self.user_key = 'AIzaSyAcDy-u5BlPPgwQk7v6TVKvtf4eGfVlX8I'
 
     def get_ticker_master(self, market):
         url = f'{self.url_base}/data/ticker_master'
@@ -28,12 +28,21 @@ class APIBMEHandler:
         tk_data = response.json()
         series_data = pd.read_json(tk_data, typ='series')
         return series_data
+    
+    def get_ohlc_data_ticker(self, market, ticker):
+        url = f'{self.url_base}/data/time_series'
+        params = {'market': market,
+                  'key': self.user_key,
+                  'ticker': ticker,
+                  'close': False}
+        response = requests.get(url, params)
+        tk_data = response.json()
+        series_data = pd.read_json(tk_data)
+        return series_data
 
 
 if __name__ == '__main__':
     api_handler = APIBMEHandler()
     master = api_handler.get_ticker_master('IBEX')
-    data_close = api_handler.get_close_data_ticker('IBEX', 'SAN')
-
-    print(master)
+    data_close = api_handler.get_ohlc_data_ticker('IBEX', 'SAN')
     print(data_close)

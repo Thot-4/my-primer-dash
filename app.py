@@ -4,6 +4,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
 import pandas as pd
+import plotly.graph_objects as go
 
 import utils
 
@@ -61,8 +62,16 @@ def update_ticker_value(available_options):
     Input('menu-ticker', 'value'),
     State('menu-index', 'value'))
 def update_graph(ticker, market):
-    data_close = api_handler.get_close_data_ticker(market, ticker)
-    fig = px.line(data_close, y=data_close.values, x=data_close.index)
+    data_to_plot = api_handler.get_ohlc_data_ticker(market, ticker)
+    fig = go.Figure(
+        go.Candlestick(
+            x=data_to_plot.index,
+            open=data_to_plot['open'],
+            high=data_to_plot['high'],
+            low=data_to_plot['low'],
+            close=data_to_plot['close']
+        )
+    )
     return fig
 
 if __name__ == '__main__':
